@@ -494,7 +494,7 @@ class API(object):
 
     def setup_docs(self) -> None:
         """Add default documentation routes."""
-        openapi_url = f"/openapi.json"
+        openapi_url = "/openapi.json"
 
         def _openapi() -> Tuple[str, str, str]:
             """Return OpenAPI json."""
@@ -534,7 +534,7 @@ class API(object):
 
         self._add_route("/redoc", _redoc_ui_html, cors=True, tag=["documentation"])
 
-    def response(
+    def response(  # noqa: C901
         self,
         status: Union[int, str],
         content_type: str,
