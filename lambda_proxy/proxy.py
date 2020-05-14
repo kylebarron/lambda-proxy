@@ -546,6 +546,7 @@ class API(object):
         b64encode: bool = False,
         ttl: int = None,
         cache_control: str = None,
+        custom_headers: dict = None,
     ):
         """Return HTTP response.
 
@@ -581,6 +582,9 @@ class API(object):
             "statusCode": status,
             "headers": {"Content-Type": content_type},
         }
+
+        if custom_headers:
+            messageData["headers"].update(custom_headers)
 
         if cors:
             messageData["headers"]["Access-Control-Allow-Origin"] = "*"
