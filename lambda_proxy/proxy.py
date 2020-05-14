@@ -494,7 +494,7 @@ class API(object):
 
     def setup_docs(self) -> None:
         """Add default documentation routes."""
-        openapi_url = f"/openapi.json"
+        openapi_url = "/openapi.json"
 
         def _openapi() -> Tuple[str, str, str]:
             """Return OpenAPI json."""
