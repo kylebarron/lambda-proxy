@@ -704,15 +704,18 @@ class API(object):
                 json.dumps({"errorMessage": str(err)}),
             )
 
-        return self.response(
-            response[0],
-            response[1],
-            response[2],
-            cors=route_entry.cors,
-            accepted_methods=route_entry.methods,
-            accepted_compression=self.event["headers"].get("accept-encoding", ""),
-            compression=route_entry.compression,
-            b64encode=route_entry.b64encode,
-            ttl=route_entry.ttl,
-            cache_control=route_entry.cache_control,
-        )
+        custom_response_params = response[3] if len(response) > 3 else {}
+        response_params = {
+            **dict(
+                cors=route_entry.cors,
+                accepted_methods=route_entry.methods,
+                accepted_compression=self.event["headers"].get("accept-encoding", ""),
+                compression=route_entry.compression,
+                b64encode=route_entry.b64encode,
+                ttl=route_entry.ttl,
+                cache_control=route_entry.cache_control,
+            ),
+            **custom_response_params,
+        }
+
+        return self.response(response[0], response[1], response[2], **response_params)
