@@ -90,6 +90,7 @@ class RouteEntry(object):
         binary_b64encode: bool = False,
         ttl=None,
         cache_control=None,
+        custom_headers: dict = None,
         description: str = None,
         tag: Tuple = None,
     ) -> None:
@@ -105,6 +106,7 @@ class RouteEntry(object):
         self.b64encode = binary_b64encode
         self.ttl = ttl
         self.cache_control = cache_control
+        self.custom_headers = custom_headers
         self.description = description or self.endpoint.__doc__
         self.tag = tag
         if self.compression and self.compression not in ["gzip", "zlib", "deflate"]:
@@ -367,6 +369,7 @@ class API(object):
         binary_encode = kwargs.pop("binary_b64encode", False)
         ttl = kwargs.pop("ttl", None)
         cache_control = kwargs.pop("cache_control", None)
+        custom_headers = kwargs.pop("custom_headers", None)
         description = kwargs.pop("description", None)
         tag = kwargs.pop("tag", None)
 
@@ -400,6 +403,7 @@ class API(object):
             binary_encode,
             ttl,
             cache_control,
+            custom_headers,
             description,
             tag,
         )
@@ -718,6 +722,7 @@ class API(object):
                 b64encode=route_entry.b64encode,
                 ttl=route_entry.ttl,
                 cache_control=route_entry.cache_control,
+                custom_headers=route_entry.custom_headers,
             ),
             **custom_response_params,
         }
